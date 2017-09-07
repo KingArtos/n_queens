@@ -4,6 +4,7 @@ class BasicSolution
     @interactions = {}
     @structure = size.times.to_a
     @max_interaction = max_interaction
+    @solutions = []
   end
 
   def update_max(new_max = @max_interaction)
@@ -16,11 +17,18 @@ class BasicSolution
       solution = next_solution(@structure)
       break if solution?(solution) || max?
     end
-    max? ? 'Not Found' : @solution = solution
+    max? ? 'Not Found' : @solutions << solution; @solution = solution
   end
 
-  def print
-    puts formated_solution(@solution)
+  def prints
+    @solutions.each do |solution|
+      print(solution)
+      puts '____________________'
+    end
+  end
+
+  def print(solution = @solution)
+    puts formated_solution(solution)
   end
 
   def solution?(solution)
