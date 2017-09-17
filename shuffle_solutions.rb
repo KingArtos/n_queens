@@ -19,19 +19,16 @@ class ShuffleSolutions
   end
 
   def run
-    solution = @structure
     @stop = false
-    @threads.times.each do |i|
-      Thread.new{
+    @threads.times.each do
+      Thread.new do
         loop do
           solution = next_solution(@structure, 0)
-          break if solution.nil?
-          (@solutions << solution; puts @solutions.count) if solution?(solution)
-          break if max? || @stop
+          break if check_break(solution)
+          @solutions << solution if solution?(solution)
         end
-      }
+      end
     end
-    puts @solutions.count
   end
 
   def solutions_count
@@ -52,6 +49,14 @@ class ShuffleSolutions
   end
 
   private
+
+  def check_break(solution)
+    solution.nil? || max? || @stop
+  end
+
+  def print(solution = @solution)
+    puts formated_solution(solution)
+  end
 
   def coverage
     interactions_count / @max_interaction
