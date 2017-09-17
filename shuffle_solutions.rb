@@ -10,6 +10,7 @@ class ShuffleSolutions
   end
 
   def statistic
+    puts "Analyzed data number: #{@interactions.count}"
     puts "Coverage: #{percent coverage}"
     puts "Solutions in coverage: #{percent solutions}"
   end
