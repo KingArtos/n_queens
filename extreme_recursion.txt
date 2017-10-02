@@ -33,3 +33,18 @@ Q - - - -
 - - - Q -
 
 [3,0,2,4,1]
+
+
+def mirror(input = [])
+  max_length = (input.length - 1)
+  output = []
+  (input.length/2.0).round.times do |i|
+    output[i] = check(input[max_length - i])
+    output[max_length - i] = check(input[i]) if (max_length - i != i)
+  end
+  output
+end
+
+def check(input)
+  input.instance_of?(Array) ? mirror(input) : input
+end
