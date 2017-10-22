@@ -34,6 +34,21 @@ Q - - - -
 
 [3,0,2,4,1]
 
+def evolution(solution)
+  result = []
+  size = solution.count
+  solution.each do |ci|
+    cs = my_solution(solution, ci)
+    cs.each do |e|
+      result << (size * ci + e)
+    end
+  end
+  result
+end
+
+def my_solution(solution, ci)
+  ci == solution.count / 2 ? mirror(solution) : solution
+end
 
 def mirror(input = [])
   max_length = (input.length - 1)
