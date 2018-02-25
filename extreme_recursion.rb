@@ -1,7 +1,7 @@
 require './shuffle_solutions'
 class ExtremeRecursion < ShuffleSolutions
-  def check_possible_evolutions
-    @solutions.select do |solution|
+  def check_possible_evolutions(solutions = @solutions)
+    solutions.select do |solution|
       solution? evolution(solution, solution.count)
     end
   end
@@ -17,10 +17,6 @@ class ExtremeRecursion < ShuffleSolutions
     result
   end
 
-  def my_solution(solution, ci)
-    ci == solution.count / 2 ? mirror(solution) : solution
-  end
-
   def mirror(input = [])
     max_length = (input.length - 1)
     output = []
@@ -29,6 +25,12 @@ class ExtremeRecursion < ShuffleSolutions
       output[max_length - i] = check(input[i]) if (max_length - i != i)
     end
     output
+  end
+
+  private
+
+  def my_solution(solution, ci)
+    ci == solution.count / 2 ? mirror(solution) : solution
   end
 
   def check(input)
