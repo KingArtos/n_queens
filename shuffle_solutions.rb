@@ -7,6 +7,7 @@ class ShuffleSolutions
     @solutions = []
     @max_next = 10
     @threads = threads
+    @threads_running = 0
   end
 
   def statistic
@@ -19,15 +20,21 @@ class ShuffleSolutions
     @stop = true
   end
 
+  def threads_running
+    @threads_running
+  end
+
   def run
     @stop = false
     @threads.times.each do
       Thread.new do
+        @threads_running += 1
         loop do
           solution = next_solution(@structure, 0)
           break if check_break(solution)
           @solutions << solution if solution?(solution)
         end
+        @threads_running -= 1
       end
     end
   end
@@ -49,14 +56,14 @@ class ShuffleSolutions
     end.nil?
   end
 
+  def print(solution = @solution)
+    puts formated_solution(solution)
+  end
+
   private
 
   def check_break(solution)
     solution.nil? || max? || @stop
-  end
-
-  def print(solution = @solution)
-    puts formated_solution(solution)
   end
 
   def coverage
