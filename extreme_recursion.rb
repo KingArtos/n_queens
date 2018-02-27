@@ -1,8 +1,22 @@
 require './shuffle_solutions'
 class ExtremeRecursion < ShuffleSolutions
+
+  def initialize(size = 8, threads = 1)
+    @evolutions = 0
+    super(size, threads)
+  end
+
+  def print_evolutions
+    prints(@evolutions)
+  end
+
+  def evolution_statistic(solutions = @solutions)
+    @evolutions.length / solutions.length.to_f
+  end
+
   def check_possible_evolutions(solutions = @solutions)
-    solutions.select do |solution|
-      solution? evolution(solution, solution.count)
+    @evolutions = solutions.select do |solution|
+      solution? evolution(solution, solution.length)
     end
   end
 
