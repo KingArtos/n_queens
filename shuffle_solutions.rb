@@ -11,6 +11,7 @@ class ShuffleSolutions
   end
 
   def statistic
+    puts "Max interactions: #{@max_interaction} "
     puts "Analyzed data number: #{@interactions.count}"
     puts "Coverage: #{percent coverage}"
     puts "Solutions in coverage: #{percent solutions}"
@@ -24,9 +25,9 @@ class ShuffleSolutions
     @threads_running
   end
 
-  def run
+  def run(threads_count = @threads)
     @stop = false
-    @threads.times.each do
+    threads_count.times.each do
       Thread.new do
         @threads_running += 1
         loop do
@@ -43,10 +44,12 @@ class ShuffleSolutions
     @solutions.count
   end
 
-  def prints
-    @solutions.each do |solution|
+  def prints(solutions = @solutions)
+    solutions.each do |solution|
+      puts '....................'
+      puts solution.to_s
+      puts '....................'
       print(solution)
-      puts '____________________'
     end.count
   end
 
