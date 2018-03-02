@@ -1,8 +1,8 @@
-require './shuffle_solutions'
-class ExtremeRecursion < ShuffleSolutions
+require './shuffle_solution'
+class ExtremeRecursion < ShuffleSolution
 
   def initialize(size = 8, threads = 1)
-    @evolutions = 0
+    @evolutions = []
     super(size, threads)
   end
 
@@ -10,8 +10,9 @@ class ExtremeRecursion < ShuffleSolutions
     prints(@evolutions)
   end
 
-  def evolution_statistic(solutions = @solutions)
-    @evolutions.length / solutions.length.to_f
+  def statistic
+    super
+    Statistic.calc(@solutions.length, @evolutions.length, 'solutions from shuffle', 'evolutions from solutions')
   end
 
   def check_possible_evolutions(solutions = @solutions)
