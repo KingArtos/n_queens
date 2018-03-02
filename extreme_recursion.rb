@@ -3,6 +3,7 @@ class ExtremeRecursion < ShuffleSolution
 
   def initialize(size = 8, threads = 1)
     @evolutions = []
+    @history = []
     super(size, threads)
   end
 
@@ -12,13 +13,18 @@ class ExtremeRecursion < ShuffleSolution
 
   def statistic
     super
-    Statistic.calc(@solutions.length, @evolutions.length, 'solutions from shuffle', 'evolutions from solutions')
+    unless @history.empty?
+      history = @history.last
+      Statistic.calc(history.first, history.last, 'solutions from shuffle', 'evolutions from solutions')
+    end
   end
 
   def check_possible_evolutions(solutions = @solutions)
     @evolutions = solutions.select do |solution|
       solution? evolution(solution, solution.length)
     end
+    @history << [solutions.length, @evolutions.length]
+    @evolutions
   end
 
   def evolution(solution, size)
