@@ -1,5 +1,7 @@
+require './statistic'
+
 # ShuffleSolutions.new(X).run
-class ShuffleSolutions
+class ShuffleSolution
   def initialize(size = 8, threads = 1)
     @interactions = {}
     @structure = size.times.to_a
@@ -11,10 +13,8 @@ class ShuffleSolutions
   end
 
   def statistic
-    puts "Max interactions: #{@max_interaction} "
-    puts "Analyzed data number: #{@interactions.count}"
-    puts "Coverage: #{percent coverage}"
-    puts "Solutions in coverage: #{percent solutions}"
+    Statistic.calc(@max_interaction, @interactions.length, 'max interactions', 'analized interactions')
+    Statistic.calc(@interactions.length, @solutions.length, 'analized interations', 'approved interactions')
   end
 
   def stop
@@ -67,22 +67,6 @@ class ShuffleSolutions
 
   def check_break(solution)
     solution.nil? || max? || @stop
-  end
-
-  def coverage
-    interactions_count / @max_interaction
-  end
-
-  def solutions
-    @solutions.count / interactions_count
-  end
-
-  def interactions_count
-    @interactions_count ||= @interactions.count.to_f
-  end
-
-  def percent(num = 1.0)
-    num * 100
   end
 
   def calc_diagonals(solution)
