@@ -16,8 +16,8 @@ class ShuffleSolution
   end
 
   def info
-    Statistic.calc(@max_interaction, @interactions.length, 'max interactions', 'analized interactions')
-    Statistic.calc(@interactions.length, @solutions.length, 'analized interations', 'approved interactions')
+    Statistic.calc(@max_interaction, @interactions.length, 'max interactions', 'analyzed interactions')
+    Statistic.calc(@interactions.length, @solutions.length, 'analyzed interations', 'approved interactions')
   end
 
   def stop
