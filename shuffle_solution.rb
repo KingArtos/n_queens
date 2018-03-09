@@ -2,6 +2,9 @@ require './statistic'
 
 # ShuffleSolutions.new(X).run
 class ShuffleSolution
+
+  attr_reader :solutions, :interactions, :threads_running
+
   def initialize(size = 8, threads = 1)
     @interactions = {}
     @structure = size.times.to_a
@@ -12,17 +15,13 @@ class ShuffleSolution
     @threads_running = 0
   end
 
-  def statistic
+  def info
     Statistic.calc(@max_interaction, @interactions.length, 'max interactions', 'analized interactions')
     Statistic.calc(@interactions.length, @solutions.length, 'analized interations', 'approved interactions')
   end
 
   def stop
     @stop = true
-  end
-
-  def threads_running
-    @threads_running
   end
 
   def run(threads_count = @threads)
@@ -38,10 +37,6 @@ class ShuffleSolution
         @threads_running -= 1
       end
     end
-  end
-
-  def solutions_count
-    @solutions.count
   end
 
   def prints(solutions = @solutions)

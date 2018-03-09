@@ -1,6 +1,8 @@
 require './shuffle_solution'
 class ExtremeRecursion < ShuffleSolution
 
+  attr_reader :evolutions, :history
+
   def initialize(size = 8, threads = 1)
     @evolutions = []
     @history = []
@@ -11,7 +13,7 @@ class ExtremeRecursion < ShuffleSolution
     prints(@evolutions)
   end
 
-  def statistic
+  def info
     super
     unless @history.empty?
       history = @history.last
