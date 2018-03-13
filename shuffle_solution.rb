@@ -3,7 +3,7 @@ require './statistic'
 # ShuffleSolutions.new(X).run
 class ShuffleSolution
 
-  attr_reader :solutions, :interactions, :threads_running
+  attr_reader :solutions, :interactions, :threads_running, :acc
 
   def initialize(size = 8, threads = 1)
     @interactions = {}
@@ -13,9 +13,11 @@ class ShuffleSolution
     @max_next = 10
     @threads = threads
     @threads_running = 0
+    @acc = []
   end
 
   def info
+    Statistic.check_array(@acc)
     Statistic.calc(@max_interaction, @interactions.length, 'max interactions', 'analyzed interactions')
     Statistic.calc(@interactions.length, @solutions.length, 'analyzed interations', 'approved interactions')
   end
@@ -81,6 +83,7 @@ class ShuffleSolution
   end
 
   def next_solution(structure, current_next)
+    @acc << current_next
     solution = structure.shuffle
     current_next += 1
     if duplicated?(solution)
