@@ -32,9 +32,9 @@ class ShuffleSolution
       Thread.new do
         @threads_running += 1
         loop do
-          solution = next_solution(@structure, 0)
-          break if check_break(solution)
-          @solutions << solution if solution?(solution)
+          solutions = next_solutions(@structure, 0)
+          break if check_break(solutions)
+          solutions.each{ |solution| @solutions << solution if solution?(solution) }
         end
         @threads_running -= 1
       end
@@ -60,10 +60,26 @@ class ShuffleSolution
     puts formated_solution(solution)
   end
 
+  def other_possibility(solution = [], conventional = true)
+    max_length = (solution.length - 1)
+    output = []
+    if conventional
+      (solution.length/2.0).round.times do |i|
+        output[i] = solution[max_length - i]
+        output[max_length - i] = solution[i]
+      end
+    else
+      solution.length.times do |i|
+        output[i] = (solution[i] - max_length).abs
+      end
+    end
+    output
+  end
+
   private
 
-  def check_break(solution)
-    solution.nil? || max? || @stop
+  def check_break(solutions)
+    solutions.nil? || max? || @stop
   end
 
   def calc_diagonals(solution)
@@ -82,20 +98,28 @@ class ShuffleSolution
     end
   end
 
-  def next_solution(structure, current_next)
+  def next_solutions(structure, current_next)
     @acc << current_next
     solution = structure.shuffle
     current_next += 1
     if duplicated?(solution)
-      next_solution(structure, current_next) if may_next?(current_next)
+      next_solutions(structure, current_next) if may_next?(current_next)
     else
-      save_solution(solution)
-      solution
+      all_possibilities(solution)
     end
+  end
+
+  def all_possibilities(solution)
+    s0 = solution
+    s1 = other_possibility(s0)
+    s2 = other_possibility(s1, false)
+    s3 = other_possibility(s2)
+    [s0, s1, s2, s3].map{|possible_solution| save_solution(possible_solution)}
   end
 
   def save_solution(solution)
     @interactions[structure_key(solution)] = 0
+    solution
   end
 
   def duplicated?(solution)
