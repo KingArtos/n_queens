@@ -6,25 +6,6 @@ class Statistic
     puts ">>"
   end
 
-  def self.sum_matrix(matrix = [[],[]])
-    matrix.reduce({sum: {}, index: 0}) do |res, ul|
-      ul.each do |el|
-        res[:sum][el] ||= Array.new(list.length, 0)
-        res[:sum][el][res[:index]] += 1
-      end
-      res[:index] += 1
-      res
-    end
-  end
-
-  def self.check_matrix(matrix = [[], []])
-    puts "matrix: #{matrix.length} times"
-    matrix_length = matrix_length
-    puts "element -> " if matrix.length > 0
-    sum_matrix(matrix).each{|el, values| puts "#{el} -> #{custom_join(values, 15, ' ')}" }
-  end
-
-
   def self.check_array(list = [])
     puts "List length: #{list.length} ocurrences"
     puts "element -> ocurrences" if list.length > 0

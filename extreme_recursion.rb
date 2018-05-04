@@ -45,7 +45,7 @@ class ExtremeRecursion < ShuffleSolution
     output = []
     (input.length/2.0).round.times do |i|
       output[i] = check(input[max_length - i])
-      output[max_length - i] = check(input[i]) if (max_length - i != i)
+      output[max_length - i] = check(input[i])
     end
     output
   end
