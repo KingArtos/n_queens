@@ -39,6 +39,7 @@ class ShuffleSolution
         @threads_running -= 1
       end
     end
+    @solutions.uniq!
   end
 
   def prints(solutions = @solutions)
